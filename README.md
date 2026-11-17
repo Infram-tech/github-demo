@@ -18,6 +18,7 @@ Click **Compare & pull request** and write `Closes #1` in the description.
 ### 4. CI: the automatic check
 GitHub Actions runs on the pull request and tests the result of merging it into `main`:
 - ✅ **Check that index.html is not empty**
+- ✅ **Check that index.html is valid HTML**
 - ⏭️ **Deploy to Production** is skipped, because nothing deploys from a pull request.
 
 If the check fails (❌), the change shouldn't be merged.
@@ -32,5 +33,5 @@ A new run starts on `main`, and this time **Deploy to Production** runs.
 
 | Trigger | What runs |
 |---|---|
-| `pull_request` | CI: check that `index.html` is not empty |
+| `pull_request` | CI: check that `index.html` is not empty and is valid HTML |
 | `push` to `main` (a merge) | CI + CD: the check, then a simulated deploy |

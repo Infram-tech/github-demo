@@ -15,6 +15,9 @@ jobs:
       - name: Check that index.html is not empty
         run: grep -q "[^[:space:]]" index.html   # fails if the file is empty or only whitespace
 
+      - name: Check that index.html is valid HTML
+        run: npx --yes html-validate@9.7.1 index.html
+
       # Step 2: Continuous Deployment (Simulate/Deploy)
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
