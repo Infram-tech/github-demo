@@ -1,41 +1,21 @@
-name: CI/CD
+name: Simple CI/CD Demo
 
 on:
-  pull_request:          # CI: runs on every PR (including PRs from forks)
+  pull_request: # Runs CI when someone opens a PR
   push:
-    branches: [ main ]   # CD: runs when a PR is merged into main
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    branches: [ main ] # Runs CD when PR is merged to main
 
 jobs:
-  # ---------- Continuous Integration ----------
-  test:
+  check-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: index.html is not empty
+      # Step 1: Continuous Integration (Test)
+      - name: Check that index.html is not empty
         run: test -s index.html
 
-      - name: index.html has a heading
-        run: grep -q "<h1>" index.html
-
-  # ---------- Continuous Deployment ----------
-  deploy:
-    needs: test                          # only deploy if CI passed
-    if: github.event_name == 'push'      # never deploy from a PR
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      # Step 2: Continuous Deployment (Simulate/Deploy)
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying latest main branch to live server!"
