@@ -13,7 +13,7 @@ jobs:
 
       # Step 1: Continuous Integration (Test)
       - name: Check that index.html is not empty
-        run: test -s index.html
+        run: grep -q "[^[:space:]]" index.html   # fails if the file is empty or only whitespace
 
       # Step 2: Continuous Deployment (Simulate/Deploy)
       - name: Deploy to Production
